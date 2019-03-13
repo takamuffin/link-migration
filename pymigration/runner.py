@@ -5,9 +5,10 @@ import os
 
 from argparse import ArgumentParser
 from pymigration.version import version
-sys.path.insert(0, os.getcwd())
 from pymigration.model import DiscovererMigration, Version
-from views import TerminalMessages
+from pymigration.views import TerminalMessages
+
+sys.path.insert(0, os.getcwd())
 
 
 def pymigration():
@@ -38,7 +39,7 @@ def pymigration():
     terminal_message = TerminalMessages(migrations, **vars(args))
 
     if args.version:
-        print version
+        print(version)
 
     if args.down:
         migrations = list(migrations.down_migrations())
@@ -48,8 +49,8 @@ def pymigration():
                     migration.down()
                     terminal_message.make_message("down", migration)
             else:
-                print "No migrations need to be executed, already in %s version." % Version().get_current()
-        except Exception, e:
+                print("No migrations need to be executed, already in %s version." % Version().get_current())
+        except Exception as e:
             terminal_message.error_message("down", migration, e)
             sys.exit()
         if args.execute:
@@ -63,8 +64,8 @@ def pymigration():
                     migration.up()
                     terminal_message.make_message("up", migration)
             else:
-                print "No migrations need to be executed, already in %s version." % Version().get_current()
-        except Exception, e:
+                print("No migrations need to be executed, already in %s version." % Version().get_current())
+        except Exception as e:
             terminal_message.error_message("up", migration, e)
 
     if args.current_version:
@@ -76,7 +77,7 @@ def pymigration():
                 try:
                     migration.up()
                     terminal_message.make_message("up", migration)
-                except Exception, e:
+                except Exception as e:
                     terminal_message.error_message("up", migration, e)
                     sys.exit()
 
@@ -84,7 +85,7 @@ def pymigration():
                 try:
                     migration.down()
                     terminal_message.make_message("down", migration)
-                except Exception, e:
+                except Exception as e:
                     terminal_message.error_message("down", migration, e)
                     sys.exit()
         if args.execute:

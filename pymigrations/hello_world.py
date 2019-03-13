@@ -11,8 +11,8 @@ def up():
         HeLo World
         and migrate the world
     """
-    print "HeLo World"
+    print("HeLo World")
 
 def down():
     """roolback the world"""
-    print "Bye World"
+    print("Bye World")

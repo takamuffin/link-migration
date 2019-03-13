@@ -3,7 +3,7 @@
 version = "0.0.5"
 
 def up():
-    print "Next time, I'll write a docstring."
+    print("Next time, I'll write a docstring.")
 
 def down():
-    print "Writing docstring."
+    print("Writing docstring.")

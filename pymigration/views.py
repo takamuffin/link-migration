@@ -47,13 +47,13 @@ class TerminalMessages(object):
 
     def __init__(self, migrations, **kwargs):
         self.migrations = migrations
-        print "Running command: pymigration %s" % " ".join(sys.argv[1:])
+        print("Running command: pymigration %s" % " ".join(sys.argv[1:]))
 
     def current_version(self):
-        print self.migrations.current_version
+        print(self.migrations.current_version)
 
     def make_message(self, method, migration):
-        print FormatterMessage(migration).message(method=method)
+        print(FormatterMessage(migration).message(method=method))
 
     def error_message(self, method, migration, error):
-        print FormatterMessage(migration).message_error(method, error)
+        print(FormatterMessage(migration).message_error(method, error))

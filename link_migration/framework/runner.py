@@ -4,9 +4,9 @@ import sys
 import os
 
 from argparse import ArgumentParser
-from link_migration.version import version
-from link_migration.model import DiscovererMigration, Version
-from link_migration.views import TerminalMessages
+from link_migration.framework.version import version
+from link_migration.framework.model import DiscovererMigration, Version
+from link_migration.framework.views import TerminalMessages
 
 sys.path.insert(0, os.getcwd())
 

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import example_migrations
+from link_migration import example_migrations
 import inspect
 
 from os.path import basename
-from example_migrations import conf
+from link_migration.example_migrations import conf
 from importlib import import_module
 from modulefinder import ModuleFinder
 

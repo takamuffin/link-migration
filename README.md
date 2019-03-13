@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/globocom/link-migration.png)](https://api.travis-ci.org/globocom/link-migration)
+[![Build Status](https://api.travis-ci.org/takamuffin/link-migration.png)](https://api.travis-ci.org/takamuffin/link-migration)
 
 Link Migration
 ===========
@@ -12,7 +12,7 @@ We try to make Link Migration both as easy-to-use and intuitive as possible, by 
 Version
 =======
 
-0.0.7
+0.0.11
 
 
 Install

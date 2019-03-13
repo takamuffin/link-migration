@@ -6,7 +6,7 @@ import sys
 import difflib
 
 from commands import getoutput
-from link_migration.model import Version
+from link_migration.framework.model import Version
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from link_migration.version import version
+from link_migration.framework.version import version
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -20,7 +20,7 @@ setup(name='link_migration',
       keywords='migration',
       author='Alex Sansone',
       author_email='aeris1987@gmail.com',
-      url='https://github.com/takamuffin/link_migration',
+      url='https://github.com/takamuffin/link-migration',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests', 'link_migration']),
       include_package_data=True,
@@ -31,7 +31,7 @@ setup(name='link_migration',
 
       entry_points={
             'console_scripts': [
-                'link_migration = link_migration.runner:link_migration',
+                'link_migration = link_migration.framework.runner:link_migration',
             ]
         },
       )

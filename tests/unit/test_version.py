@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from unittestcase import UnitTestCase
-from pymigration.model import Version
+from link_migration.model import Version
 import pymigrations.conf
 
 

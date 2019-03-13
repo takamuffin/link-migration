@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from pymigration.version import version
+from link_migration.version import version
 
 
-long_description = "A generic tool for migrate in python. https://github.com/takamuffin/link-migration"
+long_description = "A generic tool for migrate in python. https://github.com/takamuffin/link_migration"
 
 
-setup(name='link-migration',
+setup(name='link_migration',
       version=version,
       description="A generic tool for migrate in python.",
       long_description=long_description,
@@ -15,9 +15,9 @@ setup(name='link-migration',
       keywords='migration',
       author='Alex Sansone',
       author_email='aeris1987@gmail.com',
-      url='https://github.com/takamuffin/link-migration',
+      url='https://github.com/takamuffin/link_migration',
       license='MIT',
-      packages=find_packages(exclude=['ez_setup', 'examples', 'tests', 'pymigrations']),
+      packages=find_packages(exclude=['ez_setup', 'examples', 'tests', 'link_migration']),
       include_package_data=True,
       zip_safe=False,
       install_requires=[
@@ -26,7 +26,7 @@ setup(name='link-migration',
 
       entry_points={
             'console_scripts': [
-                'link-migration = link-migration.runner:link-migration',
+                'link_migration = link_migration.runner:link_migration',
             ]
         },
       )

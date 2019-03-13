@@ -4,14 +4,14 @@ import sys
 import os
 
 from argparse import ArgumentParser
-from pymigration.version import version
-from pymigration.model import DiscovererMigration, Version
-from pymigration.views import TerminalMessages
+from link_migration.version import version
+from link_migration.model import DiscovererMigration, Version
+from link_migration.views import TerminalMessages
 
 sys.path.insert(0, os.getcwd())
 
 
-def pymigration():
+def link_migration():
 
     parser = ArgumentParser(description="Parameters to migrate.")
     parser.add_argument("-u", "--up", dest="up", default=False, action="store_true",
@@ -27,7 +27,7 @@ def pymigration():
                       help="Version of actual migration.", action="store_true")
 
     parser.add_argument("-v", "--version", dest="version", default=False,
-                      help="Displays link-migration's version and exit.", action="store_true")
+                      help="Displays link_migration's version and exit.", action="store_true")
 
     parser.add_argument("-t", "--to", dest="version_to", default=None,
                     help="Migrate to specific version .")

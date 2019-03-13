@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from pymigration.views import TerminalMessages
+from link_migration.views import TerminalMessages
 from unittestcase import UnitTestCase
-from pymigration.model import DiscovererMigration, MigrationWrapper
+from link_migration.model import DiscovererMigration, MigrationWrapper
 from pymigrations import hello_world
 
 

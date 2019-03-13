@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pymigration.model import MigrationWrapper
+from link_migration.model import MigrationWrapper
 from pymigrations import hello_world, without_docstring
 from unittestcase import UnitTestCase
 

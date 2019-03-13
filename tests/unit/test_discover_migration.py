@@ -2,7 +2,7 @@
 
 import pymigrations.conf
 
-from pymigration.model import DiscovererMigration, MigrationWrapper
+from link_migration.model import DiscovererMigration, MigrationWrapper
 from pymigrations import bla_bla_bla, bye_world, hello_world, exception, without_docstring
 from unittestcase import UnitTestCase
 

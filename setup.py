@@ -3,15 +3,20 @@
 from setuptools import setup, find_packages
 from link_migration.version import version
 
-
-long_description = "A generic tool for migrate in python. https://github.com/takamuffin/link_migration"
-
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(name='link_migration',
       version=version,
       description="A generic tool for migrate in python.",
       long_description=long_description,
-      classifiers=[],
+      long_description_content_type="text/markdown",
+      classifiers=[
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.6",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: OS Independent",
+      ],
       keywords='migration',
       author='Alex Sansone',
       author_email='aeris1987@gmail.com',

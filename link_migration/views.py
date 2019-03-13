@@ -47,7 +47,7 @@ class TerminalMessages(object):
 
     def __init__(self, migrations, **kwargs):
         self.migrations = migrations
-        print("Running command: pymigration %s" % " ".join(sys.argv[1:]))
+        print("Running command: link_migration %s" % " ".join(sys.argv[1:]))
 
     def current_version(self):
         print(self.migrations.current_version)

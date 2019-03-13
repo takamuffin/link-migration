@@ -31,7 +31,7 @@ class DiscovererMigration(object):
     def migrations_files(self, reverse=False):
         finder = ModuleFinder()
         submodules_names = [name for name in finder.find_all_submodules(pymigrations) if self._submodule_name_valid(name)]
-        submodules = [import_module("pymigrations.%s" % name) for name in submodules_names]
+        submodules = [import_module("link_migration.%s" % name) for name in submodules_names]
         submodules = sorted(submodules, key=lambda s: s.version, reverse=reverse)
         return submodules
 

@@ -2,9 +2,9 @@
 
 import difflib
 
-from pymigration.views import FormatterMessage
+from link_migration.views import FormatterMessage
 from pymigrations import hello_world, exception
-from pymigration.model import MigrationWrapper
+from link_migration.model import MigrationWrapper
 from unittestcase import UnitTestCase
 
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from link_migration.views import TerminalMessages
+from link_migration.framework.views import TerminalMessages
 from unittestcase import UnitTestCase
-from link_migration.model import DiscovererMigration, MigrationWrapper
-from example_migrations import hello_world
+from link_migration.framework.model import DiscovererMigration, MigrationWrapper
+from link_migration.example_migrations import hello_world
 
 
 class TestTerminalMessages(UnitTestCase):

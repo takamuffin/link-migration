@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 
-import example_migrations.conf
+import link_migration.example_migrations.conf
 
-from link_migration.model import DiscovererMigration, MigrationWrapper
-from example_migrations import bla_bla_bla, bye_world, hello_world, exception, without_docstring
+from link_migration.framework.model import DiscovererMigration, MigrationWrapper
+from link_migration.example_migrations import bye_world, without_docstring
+from link_migration.example_migrations import bla_bla_bla, hello_world, exception
 from unittestcase import UnitTestCase
 
 
 class TestDiscovererMigrationMidleVersion(UnitTestCase):
     def setUp(self):
-        self.old_current_version = example_migrations.conf.current_version
-        example_migrations.conf.current_version = lambda: '0.0.2'
+        self.old_current_version = link_migration.example_migrations.conf.current_version
+        link_migration.example_migrations.conf.current_version = lambda: '0.0.2'
         self.discover_migrations = DiscovererMigration()
 
     def tearDown(self):
-        example_migrations.conf.current_version = self.old_current_version
+        link_migration.example_migrations.conf.current_version = self.old_current_version
 
     def test_should_upgrade(self):
-        self.assertEqual([MigrationWrapper(bye_world), MigrationWrapper(exception), MigrationWrapper(without_docstring)], list(self.discover_migrations.up_migrations()))
+        self.assertEqual([MigrationWrapper(bye_world), MigrationWrapper(exception), MigrationWrapper(
+            without_docstring)], list(self.discover_migrations.up_migrations()))
 
     def test_should_downgrade(self):
         self.assertListEqual([MigrationWrapper(bla_bla_bla), MigrationWrapper(hello_world)], list(self.discover_migrations.down_migrations()))
@@ -29,7 +31,8 @@ class TestDiscovererMigration(UnitTestCase):
         self.discover_migrations = DiscovererMigration()
 
     def test_should_upgrade(self):
-        self.assertEqual([ MigrationWrapper(bla_bla_bla), MigrationWrapper(bye_world), MigrationWrapper(exception), MigrationWrapper(without_docstring)], list(self.discover_migrations.up_migrations()))
+        self.assertEqual([MigrationWrapper(bla_bla_bla), MigrationWrapper(bye_world), MigrationWrapper(exception), MigrationWrapper(
+            without_docstring)], list(self.discover_migrations.up_migrations()))
 
     def test_should_downgrade(self):
         self.assertListEqual([MigrationWrapper(hello_world)], list(self.discover_migrations.down_migrations()))
@@ -40,7 +43,7 @@ class TestDiscovererMigration(UnitTestCase):
 
     def test_should_get_migrations_files_in_reverse(self):
         submodules = self.discover_migrations.migrations_files(reverse=True)
-        self.assertListEqual([without_docstring ,exception, bye_world, bla_bla_bla, hello_world], submodules)
+        self.assertListEqual([without_docstring, exception, bye_world, bla_bla_bla, hello_world], submodules)
 
     def test_should_method_is_up(self):
         discover_migrations = DiscovererMigration(version_to='1.0.6')

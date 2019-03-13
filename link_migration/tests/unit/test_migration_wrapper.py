@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from link_migration.model import MigrationWrapper
-from example_migrations import hello_world, without_docstring
+from link_migration.framework.model import MigrationWrapper
+from link_migration.example_migrations import without_docstring
+from link_migration.example_migrations import hello_world
 from unittestcase import UnitTestCase
 
 

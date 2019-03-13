@@ -6,7 +6,6 @@ from link_migration.version import version
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-
 setup(name='link_migration',
       version=version,
       description="A generic tool for migrate in python.",

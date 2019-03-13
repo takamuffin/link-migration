@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
-from link_migration.version import version
+from link_migration.framework.version import VERSION
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='link_migration',
-      version=version,
+      version=VERSION,
       description="A generic tool for migrate in python.",
       long_description=long_description,
       long_description_content_type="text/markdown",

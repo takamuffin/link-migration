@@ -4,7 +4,7 @@ import sys
 import os
 
 from argparse import ArgumentParser
-from link_migration.version import version
+from link_migration.framework.version import VERSION
 from link_migration.framework.model import DiscovererMigration, Version
 from link_migration.framework.views import TerminalMessages
 
@@ -39,7 +39,7 @@ def link_migration():
     terminal_message = TerminalMessages(migrations, **vars(args))
 
     if args.version:
-        print(version)
+        print(VERSION)
 
     if args.down:
         migrations = list(migrations.down_migrations())

@@ -12,7 +12,7 @@ We try to make Link Migration both as easy-to-use and intuitive as possible, by 
 Version
 =======
 
-0.0.11
+0.0.12
 
 
 Install

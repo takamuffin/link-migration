@@ -27,7 +27,7 @@ def pymigration():
                       help="Version of actual migration.", action="store_true")
 
     parser.add_argument("-v", "--version", dest="version", default=False,
-                      help="Displays pymigration's version and exit.", action="store_true")
+                      help="Displays link-migration's version and exit.", action="store_true")
 
     parser.add_argument("-t", "--to", dest="version_to", default=None,
                     help="Migrate to specific version .")

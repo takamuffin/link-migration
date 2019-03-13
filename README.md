@@ -1,13 +1,13 @@
-[![Build Status](https://api.travis-ci.org/globocom/pymigration.png)](https://api.travis-ci.org/globocom/pymigration)
+[![Build Status](https://api.travis-ci.org/globocom/link-migration.png)](https://api.travis-ci.org/globocom/link-migration)
 
-Pymigration
+Link Migration
 ===========
 
 A generic tool for migrate in python.
 
-Pymigration brings migrations to Python applications. Its main objectives are to provide a simple, stable and database-independent migration layer to prevent all the hassle schema changes over time bring to your applications.
+Link Migration brings migrations to Python applications. Its main objectives are to provide a simple, stable and database-independent migration layer to prevent all the hassle schema changes over time bring to your applications.
 
-We try to make Pymigration both as easy-to-use and intuitive as possible, by making it automate most of your schema-changing tasks, while at the same time providing a powerful set of tools for large or complex projects.
+We try to make Link Migration both as easy-to-use and intuitive as possible, by making it automate most of your schema-changing tasks, while at the same time providing a powerful set of tools for large or complex projects.
 
 Version
 =======
@@ -20,11 +20,11 @@ Install
 
 If you have pip available on your system, just type::
 
-    pip install pymigration
+    pip install link-migration
 
-If you’ve already got an old version of pymigration, and want to upgrade, use:
+If you’ve already got an old version of link-migration, and want to upgrade, use:
 
-    pip install --upgrade pymigration
+    pip install --upgrade link-migration
 
 
 
@@ -32,10 +32,10 @@ Understanding how to use
 ========================
 
 The first thing you’ll need is a migration file. There are some example 
-migration files in the “pymigrations” directory. The migration files 
+migration files in the “link-migrations” directory. The migration files 
 have the following format::
 
-The folder pymigrations need be a module (\_\_init\_\_.py most be present in pymigrations folder).
+The folder link-migrations need be a module (\_\_init\_\_.py most be present in link-migrations folder).
 
 
     # -*- coding: utf-8 -*-
@@ -56,20 +56,20 @@ The folder pymigrations need be a module (\_\_init\_\_.py most be present in pym
         print "Bye World and roolback the world"
 
 
-Pymigration uses the _version_ information to track the migrations schema and to 
-decide the order of execution of the scripts. Pymigration will go through all .py 
+Link Migration uses the _version_ information to track the migrations schema and to 
+decide the order of execution of the scripts. Link Migration will go through all .py 
 files in your directory and execute all of them in their creation (date) order.
 
-Second, you have to configure access to your current version so Pymigration can execute DDL. 
+Second, you have to configure access to your current version so Link Migration can execute DDL. 
 Just create a file named “conf.py”, with the following content 
-(there is also an example in the “pymigration” directory):
+(there is also an example in the “link-migration” directory):
 
     # -*- coding: utf-8 -*-
     import settings
 
-    folder = "{PATH_PYMIGRATION}/version.txt".format(**vars(settings))
+    folder = "{PATH_LINKMIGRATION}/version.txt".format(**vars(settings))
 
-It is possible to override the way Pymigration retrieve the current version. To do so,
+It is possible to override the way Link Migration retrieve the current version. To do so,
 you just need do implement the methods get_current_version and set_current_version:
 
     # -*- coding: utf-8 -*-
@@ -94,9 +94,9 @@ If you want, you can migrate your database schema to a specific version by
 informing the --to (or -t) parameter. The attribute _version_ of the migration
 file will be used as unique identifier:
 
-    $ pymigration --to=00.00.01
+    $ link-migration --to=00.00.01
 
-If you don’t specify any version, using --up or --down, Pymigration will migrate 
+If you don’t specify any version, using --up or --down, Link Migration will migrate 
 the schema to the latest version available in the migrations directories 
 specified in the config file.
 
@@ -112,19 +112,19 @@ solr, elasticsearch or any database server.
 Getting involved !
 ==================
 
-Pymigration's development may be viewed and followed on github::
+Link Migration's development may be viewed and followed on github::
 
-    http://github.com/globocom/pymigration
+    http://github.com/globocom/link-migration
 
 Retrieve the source code using 'git'::
 
-    $ git clone git@github.com:globocom/pymigration.git
+    $ git clone git@github.com:globocom/link-migration.git
 
 
 Install package in 'development mode' and run tests with _run_::
 
-    $ git clone git@github.com:globocom/pymigration.git
-    $ cd pymigration
+    $ git clone git@github.com:globocom/link-migration.git
+    $ cd link-migration
     $ ./run unit
 
 

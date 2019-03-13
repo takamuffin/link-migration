@@ -40,7 +40,7 @@ class TestDiscovererMigration(unittest2.TestCase):
         output = shell("link_migration -c")
         self.assertIn("0.0.1", output)
 
-    def test_should_displays_pymigrations_version(self):
+    def test_should_displays_link_migration_version(self):
         output = shell("link_migration -v")
         self.assertIn("0.0.7", output)
 

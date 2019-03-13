@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import pymigrations
+import example_migrations
 import inspect
 
 from os.path import basename
-from pymigrations import conf
+from example_migrations import conf
 from importlib import import_module
 from modulefinder import ModuleFinder
 
@@ -30,7 +30,7 @@ class DiscovererMigration(object):
 
     def migrations_files(self, reverse=False):
         finder = ModuleFinder()
-        submodules_names = [name for name in finder.find_all_submodules(pymigrations) if self._submodule_name_valid(name)]
+        submodules_names = [name for name in finder.find_all_submodules(example_migrations) if self._submodule_name_valid(name)]
         submodules = [import_module("link_migration.%s" % name) for name in submodules_names]
         submodules = sorted(submodules, key=lambda s: s.version, reverse=reverse)
         return submodules

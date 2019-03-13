@@ -3,7 +3,7 @@
 from link_migration.views import TerminalMessages
 from unittestcase import UnitTestCase
 from link_migration.model import DiscovererMigration, MigrationWrapper
-from pymigrations import hello_world
+from example_migrations import hello_world
 
 
 class TestTerminalMessages(UnitTestCase):

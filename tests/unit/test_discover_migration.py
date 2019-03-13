@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import pymigrations.conf
+import example_migrations.conf
 
 from link_migration.model import DiscovererMigration, MigrationWrapper
-from pymigrations import bla_bla_bla, bye_world, hello_world, exception, without_docstring
+from example_migrations import bla_bla_bla, bye_world, hello_world, exception, without_docstring
 from unittestcase import UnitTestCase
 
 
 class TestDiscovererMigrationMidleVersion(UnitTestCase):
     def setUp(self):
-        self.old_current_version = pymigrations.conf.current_version
-        pymigrations.conf.current_version = lambda: '0.0.2'
+        self.old_current_version = example_migrations.conf.current_version
+        example_migrations.conf.current_version = lambda: '0.0.2'
         self.discover_migrations = DiscovererMigration()
 
     def tearDown(self):
-        pymigrations.conf.current_version = self.old_current_version
+        example_migrations.conf.current_version = self.old_current_version
 
     def test_should_upgrade(self):
         self.assertEqual([MigrationWrapper(bye_world), MigrationWrapper(exception), MigrationWrapper(without_docstring)], list(self.discover_migrations.up_migrations()))

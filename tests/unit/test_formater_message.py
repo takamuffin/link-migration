@@ -3,7 +3,7 @@
 import difflib
 
 from link_migration.views import FormatterMessage
-from pymigrations import hello_world, exception
+from example_migrations import hello_world, exception
 from link_migration.model import MigrationWrapper
 from unittestcase import UnitTestCase
 

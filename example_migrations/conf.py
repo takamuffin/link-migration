@@ -3,7 +3,7 @@ import os
 
 abs_path = os.path.abspath('')
 
-folder = "%s/pymigrations" % abs_path
+folder = "%s/example_migrations" % abs_path
 
 
 def current_version():

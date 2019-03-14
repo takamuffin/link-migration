@@ -57,7 +57,7 @@ class DiscovererMigration(object):
         # List comprehension import for each migration file and inline sort based on version
         submodules = sorted(
             [
-                import_module(f'{self.config.ROOT_DIR}.{name}')
+                import_module(f'{self.config.MIGRATIONS_DIR}.{name}')
                 for name in ModuleFinder().find_all_submodules(import_module(self.config.MIGRATIONS_DIR))
                 if self._submodule_name_valid(name)
             ],

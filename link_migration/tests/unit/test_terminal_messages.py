@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from link_migration.framework.views import TerminalMessages
-from unittestcase import UnitTestCase
 from link_migration.framework.model import DiscovererMigration, MigrationWrapper
 from link_migration.example_migrations import hello_world
 
 
-class TestTerminalMessages(UnitTestCase):
+class TestTerminalMessages:
 
     def test_should_get_message_of_current_version(self):
         migrations = DiscovererMigration()

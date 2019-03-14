@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from unittestcase import UnitTestCase
-from link_migration.framework.model import Version
 import link_migration.example_migrations.conf
 
 
-class TestVersion(UnitTestCase):
+class TestVersion:
 
-    def setUp(self):
-        self.version = Version()
+    # def setUp(self):
+    #     self.version = Version()
 
     def test_should_get_current_version_in_configuration(self):
         self.assertEqual("0.0.1", self.version.get_current())

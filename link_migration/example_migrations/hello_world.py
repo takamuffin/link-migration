@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-    migrate all the world of test
-    greetings world
+    Hello World.
+
+    This is the most simplistic migration technique.
+
 """
 
-version = "0.0.1"
+version = 1
+
 
 def up():
     """
-        HeLo World
-        and migrate the world
+        Migrate Hello World
     """
-    print("HeLo World")
+    print("Hello World")
+
 
 def down():
-    """roolback the world"""
-    print("Bye World")
+    """
+        Downgrade Hello World
+    """
+    print("Goodbye World")

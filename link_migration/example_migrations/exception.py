@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 """
-    Test for raise a exception
+    Raise an exception during migration.
+
+    Consider multiple way to handle an exception, such as continuation,
+    ending, and retrying.
 """
 
-version = "0.0.4"
+version = 4
 
 
 def up():
     """
-        Starting exeception
+        Upgrading with an exception
     """
-    1/0
+
+    raise Exception('An Exception in migration upgrading occured')
+
 
 def down():
     """
-        Rollback and raise exception
+        Downgrading with an exception
     """
-    1/0
+
+    raise Exception('An Exception in migration downgrading occured')

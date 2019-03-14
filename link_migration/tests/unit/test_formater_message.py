@@ -5,10 +5,9 @@ import difflib
 from link_migration.framework.views import FormatterMessage
 from link_migration.example_migrations import hello_world, exception
 from link_migration.framework.model import MigrationWrapper
-from unittestcase import UnitTestCase
 
 
-class TestFormatterMessage(UnitTestCase):
+class TestFormatterMessage:
 
     def assertTextEqual(self, first, second, msg=None):
         diff = ''.join(difflib.ndiff(first.splitlines(1), second.splitlines(1)))

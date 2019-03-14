@@ -9,27 +9,24 @@ import termcolor
 class FormatterMessage(object):
 
     def __init__(self, submodule):
-        self.doc_migration = self.ident(submodule.header())
-        self.doc_up = self.ident(submodule.doc_up(), 23).strip()
-        self.doc_down = self.ident(submodule.doc_down(), 23).strip()
-        self.version_migrate = "{:<15}".format(str(submodule.version))
+        self.doc_migration = self.ident(submodule.header(), 16)
+        self.doc_up = self.ident(submodule.doc_up(), 12).strip()
+        self.doc_down = self.ident(submodule.doc_down(), 12).strip()
+        self.version_migrate = f'{submodule.version}'
         self.archive_name = submodule.filename()
+        self.execute = submodule.execute
+        self.term_color = "white" if self.execute else "yellow"
 
     def message(self, method):
-        if method == "up":
-            output = """
-{self.version_migrate} - {self.archive_name}
-{self.doc_migration}
-                  {method} - {self.doc_up}
-""".format(self=self, method=method)
-            return output
-        else:
-            output = """
-{self.version_migrate} - {self.archive_name}
-{self.doc_migration}
-                  {method} - {self.doc_down}
-""".format(self=self, method=method)
-            return output
+        top_line = termcolor.colored(f'{self.version_migrate} - {self.archive_name} -- Dry Run: {not self.execute}', self.term_color)
+        output = (
+            f'{top_line}\n'
+            f'  {termcolor.colored(method.upper(), self.term_color)} - '
+            f'{termcolor.colored(self.doc_up if method == "upgrade" else self.doc_down, self.term_color)}\n\n'
+            f'{termcolor.colored(self.doc_migration, "blue")}\n'
+        )
+
+        return output
 
     def ident(self, text, space=18):
         text = dedent(text)
@@ -39,7 +36,7 @@ class FormatterMessage(object):
         return text
 
     def message_error(self, method, error):
-        message_error = termcolor.colored(self.message(method=method) + "\n" + str(error), "red")
+        message_error = f'{termcolor.colored(error, "red")}'
         return message_error
 
 

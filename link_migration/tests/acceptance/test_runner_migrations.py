@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 
-import unittest2
+import pytest
 import os
 import sys
 import difflib
 
-from commands import getoutput
-from link_migration.framework.model import Version
+# from commands import getoutput
+# from link_migration.framework.model import Version
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 
-def shell(command):
-    return getoutput("cd {PROJECT_PATH} && {command}".format(PROJECT_PATH=PROJECT_PATH, command=command))
+# def shell(command):
+#     return getoutput("cd {PROJECT_PATH} && {command}".format(PROJECT_PATH=PROJECT_PATH, command=command))
 
 
-class TestDiscovererMigration(unittest2.TestCase):
+class TestDiscovererMigration:
 
     def assertTextEqual(self, first, second, msg=None):
         diff = "\n\n" + ''.join(difflib.ndiff(first.splitlines(1), second.splitlines(1)))
@@ -48,13 +48,13 @@ class TestDiscovererMigration(unittest2.TestCase):
         output = shell("link_migration -u --no-exec")
         list_migrations = """Running command: link_migration -u --no-exec
 
-0.0.2           - bla_bla_bla.py
+0.0.2           - using_self.py
                   Bla Bla Bla
                   up - Start dialogue
                        Bla Bla Bla
 
 
-0.0.3           - bye_world.py
+0.0.3           - delete_upgrade.py
                   bye world
                   up - Bye World
                        and destroy the world
@@ -88,7 +88,7 @@ class TestDiscovererMigration(unittest2.TestCase):
         output = shell("link_migration --to 0.0.2 --no-exec")
         returned_message = """Running command: link_migration --to 0.0.2 --no-exec
 
-0.0.2           - bla_bla_bla.py
+0.0.2           - using_self.py
                   Bla Bla Bla
                   up - Start dialogue
                        Bla Bla Bla

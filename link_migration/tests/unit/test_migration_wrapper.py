@@ -3,10 +3,9 @@
 from link_migration.framework.model import MigrationWrapper
 from link_migration.example_migrations import without_docstring
 from link_migration.example_migrations import hello_world
-from unittestcase import UnitTestCase
 
 
-class TestMigrationWrapper(UnitTestCase):
+class TestMigrationWrapper:
 
     def setUp(self):
         self.migration = MigrationWrapper(hello_world)

@@ -49,7 +49,7 @@ def link_migration():
 
     parser.add_argument(
         "-t", "--to",
-        dest="version_to", default=None,
+        dest="version_to", default=0,
         help="Migrate to specific version ."
     )
 

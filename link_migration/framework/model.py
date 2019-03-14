@@ -58,12 +58,16 @@ class DiscovererMigration(object):
         submodules = sorted(
             [
                 import_module(f'{self.config.ROOT_DIR}.{name}')
-                for name in ModuleFinder().find_all_submodules(example_migrations)
+                for name in ModuleFinder().find_all_submodules(import_module(self.config.MIGRATIONS_DIR))
                 if self._submodule_name_valid(name)
             ],
             key=lambda s: s.version,  # use version property for sorting
             reverse=reverse
         )
+        if not len(submodules):
+            self.version_to = 0
+            return []
+
         if not self.migrate_type == self.specified:
             self.version_to = submodules[-1].version if self.migrate_type == self.upgrade else submodules[0].version
 

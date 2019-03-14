@@ -7,6 +7,7 @@ abs_path = os.path.abspath('')
 folder = "%s/example_migrations" % abs_path.replace('/framework', '')
 
 ROOT_DIR = 'link_migration.example_migrations'
+MIGRATIONS_DIR = 'link_migration.example_migrations'
 
 
 NEO_HOST = 'localhost'

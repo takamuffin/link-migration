@@ -6,9 +6,7 @@
 
 """
 
-import json
-
-version = 0
+version = 0.5
 
 
 def up(self):
@@ -19,17 +17,7 @@ def up(self):
     """
     payload = "{\"statements\" : [ {\"statement\" : \"MATCH (n) RETURN count(n)\"} ]}"
 
-    response = self.config.NEO_GRAPH.request(
-        "POST",
-        self.config.NEO_TRANSACTION_URL,
-        data=payload,
-        timeout=5
-    )
-    response_data = json.loads(response.text)
-
-    if response_data.get('errors'):
-        print("Neo4j sent an error:", response)
-        raise Exception("Encountered Neo4j Error")
+    response_data = self.config.post_neo(data=payload)
 
     # get count from neo
     total_nodes = response_data['results'][0]['data'][0]['row'][0]
@@ -44,17 +32,7 @@ def down(self):
     """
     payload = "{\"statements\" : [ {\"statement\" : \"MATCH ()-->() RETURN count(*)\"} ]}"
 
-    response = self.config.NEO_GRAPH.request(
-        "POST",
-        self.config.NEO_TRANSACTION_URL,
-        data=payload,
-        timeout=5
-    )
-    response_data = json.loads(response.text)
-
-    if response_data.get('errors'):
-        print("Neo4j sent an error:", response)
-        raise Exception("Encountered Neo4j Error")
+    response_data = self.config.post_neo(data=payload)
 
     # get count from neo
     total_nodes = response_data['results'][0]['data'][0]['row'][0]

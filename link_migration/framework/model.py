@@ -41,16 +41,16 @@ class DiscovererMigration(object):
 
         return []
 
-    def down_migrations(self, version=0):
+    def down_migrations(self):
         for migration_file in self.migrations_files(reverse=True):
             migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config)
-            if migration.version > self.version_to:
+            if self.current_version >= migration.version > self.version_to:
                 yield migration
 
-    def up_migrations(self, version=0):
+    def up_migrations(self):
         for migration_file in self.migrations_files():
             migration = MigrationWrapper(migration_file,  execute=self.execute, config=self.config)
-            if migration.version <= self.version_to:
+            if self.current_version < migration.version <= self.version_to:
                 yield migration
 
     def migrations_files(self, reverse=False):
@@ -65,7 +65,7 @@ class DiscovererMigration(object):
             reverse=reverse
         )
         if not len(submodules):
-            self.version_to = 0
+            self.version_to = self.current_version
             return []
 
         if not self.migrate_type == self.specified:

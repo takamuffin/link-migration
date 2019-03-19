@@ -5,6 +5,8 @@ import sys
 import os
 import termcolor
 import traceback
+import io
+from contextlib import redirect_stdout
 
 from argparse import ArgumentParser
 from link_migration.framework.version import VERSION
@@ -93,7 +95,10 @@ def link_migration():
         try:
             for migration in migrations_to_execute:
                 terminal_message.make_message(migrate_type, migration)
-                getattr(migration, migrate_type)()
+                with io.StringIO() as buf, redirect_stdout(buf):
+                    getattr(migration, migrate_type)()
+                    output = buf.getvalue()
+                terminal_message.print_message(output, 'magenta')
         except Exception as e:
             print(traceback.format_exc())
             terminal_message.error_message(migrate_type, migration, e)

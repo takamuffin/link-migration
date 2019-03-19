@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import requests
+import json
 
 abs_path = os.path.abspath('')
 
@@ -33,3 +34,23 @@ def set_current_version(version):
     with open(path, "w") as f:
         content = f.write(f'{version}')
     return int(content)
+
+
+def post_neo(data=None):
+    if not data:
+        raise Exception("data keyword argument is required")
+
+    response = NEO_GRAPH.request(
+        "POST",
+        NEO_TRANSACTION_URL,
+        data=data,
+        timeout=5
+    )
+
+    response_data = json.loads(response.text)
+
+    if response_data.get('errors'):
+        print("Neo4j sent an error:", response)
+        raise Exception("Encountered Neo4j Error")
+
+    return response_data

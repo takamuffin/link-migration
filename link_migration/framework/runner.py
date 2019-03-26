@@ -61,6 +61,10 @@ def link_migration():
         help="Specify a custom configuration file."
     )
 
+    parser.add_argument(
+        "-m", "--make-migration"
+    )
+
     args = parser.parse_args()
     args.config = importlib.import_module(args.config)
 

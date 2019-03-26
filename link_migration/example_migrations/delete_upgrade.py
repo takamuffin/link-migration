@@ -5,7 +5,7 @@
     This is the most simplistic migration technique.
 """
 
-version = 3
+version = 30
 
 
 def up():

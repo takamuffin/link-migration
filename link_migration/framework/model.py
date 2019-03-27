@@ -136,13 +136,13 @@ class MigrationWrapper(object):
         if inspect.getdoc(self.migration_file.up):
             return inspect.getdoc(self.migration_file.up)
         else:
-            return "No docstring found"
+            return "No upgrade docstring found"
 
     def doc_down(self):
         if inspect.getdoc(self.migration_file.down):
             return inspect.getdoc(self.migration_file.down)
         else:
-            return "No docstring found"
+            return "No downgrade docstring found"
 
     @property
     def version(self):

@@ -9,7 +9,6 @@
 version = 10
 
 
-@assumption
 def up(self):
     """
         Get a count of the total nodes in the graph.

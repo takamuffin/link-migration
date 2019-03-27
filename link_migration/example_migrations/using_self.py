@@ -6,7 +6,7 @@
     metadata and functionality.
 """
 
-version = 2
+version = 20
 
 
 def up(self):

@@ -6,7 +6,7 @@
 
 """
 
-version = 0.5
+version = 10
 
 
 def up(self):

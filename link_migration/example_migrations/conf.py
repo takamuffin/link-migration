@@ -3,13 +3,9 @@ import os
 import requests
 import json
 
-abs_path = os.path.abspath('')
-
-folder = "%s/example_migrations" % abs_path.replace('/framework', '')
-
 ROOT_DIR = 'link_migration.example_migrations'
+MIGRATIONS_ABS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 MIGRATIONS_DIR = 'link_migration.example_migrations'
-
 
 NEO_HOST = 'localhost'
 NEO_PORT = '7474'
@@ -23,14 +19,14 @@ NEO_GRAPH.auth = requests.auth.HTTPBasicAuth(NEO_USER, NEO_PASSWORD)
 
 
 def get_current_version():
-    path = "%s/current_version.txt" % folder
+    path = "%s/current_version.txt" % MIGRATIONS_ABS_PATH
     with open(path, "r+") as f:
         content = f.read()
     return int(content)
 
 
 def set_current_version(version):
-    path = "%s/current_version.txt" % folder
+    path = "%s/current_version.txt" % MIGRATIONS_ABS_PATH
     with open(path, "w") as f:
         content = f.write(f'{version}')
     return int(content)
@@ -50,7 +46,6 @@ def post_neo(data=None):
     response_data = json.loads(response.text)
 
     if response_data.get('errors'):
-        print("Neo4j sent an error:", response)
-        raise Exception("Encountered Neo4j Error")
+        raise Exception(f"Encountered Neo4j Error: {response.text}")
 
     return response_data

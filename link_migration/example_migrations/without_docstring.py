@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-version = 5
+version = 50
 
 
 def up():

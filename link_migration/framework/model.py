@@ -12,7 +12,7 @@ from types import MethodType
 
 class DiscovererMigration(object):
 
-    def __init__(self, execute=True, version_to=None, config=None, **kwargs):
+    def __init__(self, execute=True, version_to=0, config=None, **kwargs):
         self.execute = execute
         self.version_to = int(version_to)
         self.current_version = config.get_current_version()
@@ -44,7 +44,7 @@ class DiscovererMigration(object):
     def down_migrations(self):
         for migration_file in self.migrations_files(reverse=True):
             migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config)
-            if self.current_version >= migration.version > self.version_to:
+            if self.current_version >= migration.version >= self.version_to:
                 yield migration
 
     def up_migrations(self):
@@ -69,7 +69,7 @@ class DiscovererMigration(object):
             return []
 
         if not self.migrate_type == self.specified:
-            self.version_to = submodules[-1].version if self.migrate_type == self.upgrade else submodules[0].version
+            self.version_to = submodules[-1].version
 
         # Check for duplicate version numbers, fail if found
         versions = set()
@@ -136,13 +136,13 @@ class MigrationWrapper(object):
         if inspect.getdoc(self.migration_file.up):
             return inspect.getdoc(self.migration_file.up)
         else:
-            return "No docstring found"
+            return "No upgrade docstring found"
 
     def doc_down(self):
         if inspect.getdoc(self.migration_file.down):
             return inspect.getdoc(self.migration_file.down)
         else:
-            return "No docstring found"
+            return "No downgrade docstring found"
 
     @property
     def version(self):

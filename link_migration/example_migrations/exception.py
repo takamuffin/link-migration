@@ -6,7 +6,7 @@
     ending, and retrying.
 """
 
-version = 4
+version = 40
 
 
 def up():
@@ -14,7 +14,7 @@ def up():
         Upgrading with an exception
     """
 
-    raise Exception('An Exception in migration upgrading occured')
+    # raise Exception('An Exception in migration upgrading occured')
 
 
 def down():
@@ -22,4 +22,4 @@ def down():
         Downgrading with an exception
     """
 
-    raise Exception('An Exception in migration downgrading occured')
+    # raise Exception('An Exception in migration downgrading occured')

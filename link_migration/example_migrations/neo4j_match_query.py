@@ -15,13 +15,12 @@ def up(self):
 
         MATCH (n) RETURN count(n)
     """
-    payload = "{\"statements\" : [ {\"statement\" : \"MATCH (n) RETURN count(n)\"} ]}"
+    with self.connection.session() as session:
+        response_data = self.connection.read(session, "MATCH (n) RETURN count(n)")
 
-    response_data = self.config.post_neo(data=payload)
-
-    # get count from neo
-    total_nodes = response_data['results'][0]['data'][0]['row'][0]
-    print("Total count queried from Neo: %s" % total_nodes)
+        # get count from neo
+        for record in response_data:
+            print(f"Total nodes: {record['count(n)']}")
 
 
 def down(self):

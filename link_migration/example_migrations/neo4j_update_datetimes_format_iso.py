@@ -15,12 +15,16 @@ version = 5
 date_fields = [
     'agreed_date',
     'approved_at',
+    'assessor_attestation_date',
     'created_at',
     'date_incorporated',  # only a date, no time
     'last_login',
     'modified_at',
     'ordered_at',
     'owner_attestation_date',
+    'released_at',
+    # 'report_order:requested_completion_date',
+    'requested_completion_date',
     'submitted_at',
     'subscribe_expire',
     'subscribe_start',
@@ -80,7 +84,7 @@ def up(self, output=None):
                     pass
 
             if not date:
-                print(found_date)
+                print(f'{found_date} was unable to be parsed by the known formats: {known_formats}')
                 continue
 
             if date.strftime('%Y-%m-%dT%H:%M:%S.%fZ') != found_date:
@@ -93,8 +97,8 @@ def up(self, output=None):
             else:
                 match_count += 1
 
-    print("mismatch:", mismatch_count)
-    print("match:", match_count)
+    print("mismatched format count:" + f"{mismatch_count}".rjust(10))
+    print("matched format count:" + f"{match_count}".rjust(13))
 
 
 def down(self):

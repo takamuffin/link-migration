@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from link_migration import example_migrations
+from link_migration.framework.migration import MigrationDriver, Neo4JDriver, AVAILABLE_DRIVERS
 import inspect
 
 from os.path import basename
@@ -10,7 +10,7 @@ from modulefinder import ModuleFinder
 from types import MethodType
 
 
-class DiscovererMigration(object):
+class DiscoverMigrations(object):
 
     def __init__(self, execute=True, version_to=0, config=None, **kwargs):
         self.execute = execute
@@ -29,6 +29,8 @@ class DiscovererMigration(object):
         self.specified = 'specified'
         self.migrate_type = None
 
+        self.driver = AVAILABLE_DRIVERS.get(config.DRIVER, MigrationDriver)(**config.DRIVER_KWARGS)
+
     def migrations(self, migrate_type):
         self.migrate_type = migrate_type
         return self.migrate_types[migrate_type]()
@@ -43,13 +45,13 @@ class DiscovererMigration(object):
 
     def down_migrations(self):
         for migration_file in self.migrations_files(reverse=True):
-            migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config)
+            migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config, connection=self.driver)
             if self.current_version >= migration.version >= self.version_to:
                 yield migration
 
     def up_migrations(self):
         for migration_file in self.migrations_files():
-            migration = MigrationWrapper(migration_file,  execute=self.execute, config=self.config)
+            migration = MigrationWrapper(migration_file,  execute=self.execute, config=self.config, connection=self.driver)
             if self.current_version < migration.version <= self.version_to:
                 yield migration
 
@@ -97,12 +99,13 @@ class DiscovererMigration(object):
 
 class MigrationWrapper(object):
 
-    def __init__(self, migration_file, execute=True, config=None):
+    def __init__(self, migration_file, execute=True, config=None, connection=None):
         self.up = MethodType(migration_file.up, self)
         self.down = MethodType(migration_file.down, self)
         self.migration_file = migration_file
         self.execute = execute
         self.config = config
+        self.connection = connection
 
     def __repr__(self):
         return self.filename()

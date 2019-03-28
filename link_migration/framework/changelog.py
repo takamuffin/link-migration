@@ -1,5 +1,8 @@
 
+import os
+
 from functools import wraps
+from pathlib import Path
 
 __all__ = [
     'changelog'
@@ -14,11 +17,20 @@ class ChangeLog:
         with open(self.output, "a") as write:
             write.write(','.join([f'"{str(arg)}"' for arg in args]) + '\n')
 
+    def cleanup(self):
+        print('do something')
+
 
 def changelog(output):
     def decorator(func):
         @wraps(func)
         def wrapper(self):
-            return func(self, output=ChangeLog(self.config.MIGRATIONS_ABS_PATH + output))
+            path = Path(self.config.MIGRATIONS_ABS_PATH + output).resolve()
+            os.makedirs(path.parent)
+            path.touch()
+
+            change = ChangeLog(path)
+            func(self, output=change)
+            change.cleanup()
         return wrapper
     return decorator

@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-import os
 import requests
 import json
 
+from pathlib import Path
+
 ROOT_DIR = 'link_migration.example_migrations'
-MIGRATIONS_ABS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+MIGRATIONS_ABS_PATH = Path(__file__).resolve().parent
 MIGRATIONS_DIR = 'link_migration.example_migrations'
 
+DRIVER = 'neo4j'
+DRIVER_KWARGS = {'host': 'bolt://localhost:7687', 'auth': ('neo4j', 'password')}
 NEO_HOST = 'localhost'
 NEO_PORT = '7474'
 NEO_USER = 'neo4j'

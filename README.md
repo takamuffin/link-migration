@@ -19,11 +19,11 @@ Installation
 
 If you have pip available on your system, just type::
 
-`pip install link-migration`
+```pip install link-migration```
 
 If you’ve already got an old version of link-migration, and want to upgrade, use:
 
-`pip install --upgrade link-migration`
+```pip install --upgrade link-migration```
 
 
 Usage Introduction

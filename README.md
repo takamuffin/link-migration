@@ -69,7 +69,7 @@ If you want, you can migrate your database schema to a specific version by
 informing the --to (or -t) parameter. The attribute _version_ of the migration
 file will be used as unique identifier:
 
-    $ link-migration --to=00.00.01
+    $ link-migration --to=57
 
 If you don’t specify any version, using --up or --down, Link Migration will migrate 
 the schema to the latest version available in the migrations directories 

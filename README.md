@@ -1,13 +1,12 @@
 [![Build Status](https://api.travis-ci.org/takamuffin/link-migration.png)](https://api.travis-ci.org/takamuffin/link-migration)
 
 Link Migration
-===========
+==============
 
-A generic tool for migrate in python.
+A generic tool for schema and data migrations.
 
-Link Migration brings migrations to Python applications. Its main objectives are to provide a simple, stable and database-independent migration layer to prevent all the hassle schema changes over time bring to your applications.
+The primary inspirations for this library came from Alembic, Django, and Hibernate/Liquibase. The ultimate goal is to allow a lightweight migration framework to be deployed into any technology stack. Much of this currently relies on the user to implement, however with time more and more integrations will be added to the default set.
 
-We try to make Link Migration both as easy-to-use and intuitive as possible, by making it automate most of your schema-changing tasks, while at the same time providing a powerful set of tools for large or complex projects.
 
 Version
 =======
@@ -15,76 +14,52 @@ Version
 0.0.12
 
 
-Install
-=======
+Installation
+============
 
 If you have pip available on your system, just type::
 
-    pip install link-migration
+`pip install link-migration`
 
 If you’ve already got an old version of link-migration, and want to upgrade, use:
 
-    pip install --upgrade link-migration
+`pip install --upgrade link-migration`
 
 
+Usage Introduction
+==================
 
-Understanding how to use
-========================
+The first thing you’ll need to define is the conf.py file and to specify its location: `link_migration -c "path_to_file/conf.py"`
 
-The first thing you’ll need is a migration file. There are some example 
-migration files in the “link-migrations” directory. The migration files 
-have the following format::
+Below are the minimum requirements for definitions in conf.py. The important step here is to specify where the migrations folder exists so they can be detected, and to specify where to store and fetch the versions for executed migrations.
 
-The folder link-migrations need be a module (\_\_init\_\_.py most be present in link-migrations folder).
+```
+import os
+import requests
+import json
+
+ROOT_DIR = 'link_migration.example_migrations'
+MIGRATIONS_ABS_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+MIGRATIONS_DIR = 'link_migration.example_migrations'
 
 
-    # -*- coding: utf-8 -*-
+def get_current_version():
+    path = "%s/current_version.txt" % MIGRATIONS_ABS_PATH
+    with open(path, "r+") as f:
+        content = f.read()
+    return int(content)
 
-    """
-        migrate all the world of test
-        greetings world
-    """
 
-    version = "0.0.1"
-
-    def up():
-        """ HeLo World and migrate the world """
-        print "HeLo World and migrate the world"
-
-    def down():
-        """roolback the world"""
-        print "Bye World and roolback the world"
-
+def set_current_version(version):
+    path = "%s/current_version.txt" % MIGRATIONS_ABS_PATH
+    with open(path, "w") as f:
+        content = f.write(f'{version}')
+    return int(content)
+```
 
 Link Migration uses the _version_ information to track the migrations schema and to 
 decide the order of execution of the scripts. Link Migration will go through all .py 
-files in your directory and execute all of them in their creation (date) order.
-
-Second, you have to configure access to your current version so Link Migration can execute DDL. 
-Just create a file named “conf.py”, with the following content 
-(there is also an example in the “link-migration” directory):
-
-    # -*- coding: utf-8 -*-
-    import settings
-
-    folder = "{PATH_LINKMIGRATION}/version.txt".format(**vars(settings))
-
-It is possible to override the way Link Migration retrieve the current version. To do so,
-you just need do implement the methods get_current_version and set_current_version:
-
-    # -*- coding: utf-8 -*-
-
-    folder = "/version_folder"
-
-    def current_version():
-        with open("{folder}/version.txt".format(folder=folder)) as f:
-            version = f.read()
-        return version
-
-    def set_current_version(version):
-        with open("{folder}/version.txt".format(folder=folder)) as f:
-            f.write(version)
-
+files in your directory and execute all of them _version_ order.
 
 
 Migrating to a specific version
@@ -99,33 +74,3 @@ file will be used as unique identifier:
 If you don’t specify any version, using --up or --down, Link Migration will migrate 
 the schema to the latest version available in the migrations directories 
 specified in the config file.
-
-
-
-You can do anything!
-====================
-
-You can use this project to run migrations on MySQL, Oracle, MS-SQL, redis, filesystem, 
-solr, elasticsearch or any database server.
-
-
-Getting involved !
-==================
-
-Link Migration's development may be viewed and followed on github::
-
-    http://github.com/globocom/link-migration
-
-Retrieve the source code using 'git'::
-
-    $ git clone git@github.com:globocom/link-migration.git
-
-
-Install package in 'development mode' and run tests with _run_::
-
-    $ git clone git@github.com:globocom/link-migration.git
-    $ cd link-migration
-    $ ./run unit
-
-
-

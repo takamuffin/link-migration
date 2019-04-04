@@ -13,9 +13,16 @@ from types import MethodType
 class DiscoverMigrations(object):
 
     def __init__(self, execute=True, version_to=0, config=None, **kwargs):
+        if not getattr(config, 'DRIVER_ARGS', None):
+            config.DRIVER_ARGS = []
+        if not getattr(config, 'DRIVER_KWARGS', None):
+            config.DRIVER_KWARGS = {}
+
+        self.driver = AVAILABLE_DRIVERS.get(config.DRIVER, MigrationDriver)(*config.DRIVER_ARGS, **config.DRIVER_KWARGS)
+
         self.execute = execute
         self.version_to = int(version_to)
-        self.current_version = config.get_current_version()
+        self.current_version = config.get_current_version(self)
         self.config = config
 
         self.migrate_types = {
@@ -28,8 +35,6 @@ class DiscoverMigrations(object):
         self.upgrade = 'upgrade'
         self.specified = 'specified'
         self.migrate_type = None
-
-        self.driver = AVAILABLE_DRIVERS.get(config.DRIVER, MigrationDriver)(**config.DRIVER_KWARGS)
 
     def migrations(self, migrate_type):
         self.migrate_type = migrate_type
@@ -44,14 +49,16 @@ class DiscoverMigrations(object):
         return []
 
     def down_migrations(self):
+        migration = None
         for migration_file in self.migrations_files(reverse=True):
-            migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config, connection=self.driver)
+            migration = MigrationWrapper(migration_file, execute=self.execute, config=self.config, connection=self, previous=migration)
             if self.current_version >= migration.version >= self.version_to:
                 yield migration
 
     def up_migrations(self):
+        migration = None
         for migration_file in self.migrations_files():
-            migration = MigrationWrapper(migration_file,  execute=self.execute, config=self.config, connection=self.driver)
+            migration = MigrationWrapper(migration_file,  execute=self.execute, config=self.config, connection=self, previous=migration)
             if self.current_version < migration.version <= self.version_to:
                 yield migration
 
@@ -99,13 +106,14 @@ class DiscoverMigrations(object):
 
 class MigrationWrapper(object):
 
-    def __init__(self, migration_file, execute=True, config=None, connection=None):
-        self.up = MethodType(migration_file.up, self)
-        self.down = MethodType(migration_file.down, self)
+    def __init__(self, migration_file, execute=True, config=None, connection=None, previous=None):
+        self.up = MethodType(migration_file.up, connection)
+        self.down = MethodType(migration_file.down, connection)
         self.migration_file = migration_file
         self.execute = execute
         self.config = config
         self.connection = connection
+        self.previous = previous
 
     def __repr__(self):
         return self.filename()
@@ -119,7 +127,7 @@ class MigrationWrapper(object):
                 self.up()
             except TypeError as e:
                 self.migration_file.up()
-            self.config.set_current_version(self.version)
+            self.config.set_current_version(self.connection, self)
 
     def downgrade(self):
         if self.execute:
@@ -127,7 +135,7 @@ class MigrationWrapper(object):
                 self.down()
             except TypeError as e:
                 self.migration_file.down()
-            self.config.set_current_version(self.version)
+            self.config.set_current_version(self.connection, self)
 
     def header(self):
         if inspect.getdoc(self.migration_file):

@@ -25,8 +25,11 @@ def changelog(output):
     def decorator(func):
         @wraps(func)
         def wrapper(self):
-            path = Path(self.config.MIGRATIONS_ABS_PATH + output).resolve()
-            os.makedirs(path.parent)
+            path = Path(str(self.config.MIGRATIONS_ABS_PATH) + output).resolve()
+            try:
+                os.makedirs(path.parent)
+            except:
+                pass
             path.touch()
 
             change = ChangeLog(path)

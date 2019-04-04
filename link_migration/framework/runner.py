@@ -92,7 +92,7 @@ def link_migration():
 
         if not migrations_to_execute:
             print(termcolor.colored(
-                f'No migrations need to be executed, already at the correct version: {args.config.get_current_version()}',
+                f'No migrations need to be executed, already at the correct version: {terminal_message.current_version()}',
                 "green"
             ))
 

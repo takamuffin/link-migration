@@ -23,7 +23,7 @@ class TestFormatterMessage:
                   up - HeLo World
                        and migrate the world
 """
-        self.assertTextEqual(expected_message.strip(), message.strip())
+        assert expected_message.strip() == message.strip()
 
     def test_should_format_a_message_up(self):
         migration = MigrationWrapper(migration_file=hello_world)

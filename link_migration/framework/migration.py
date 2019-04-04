@@ -30,7 +30,7 @@ class Neo4JDriver(MigrationDriver):
         self.session = self.get_session()
 
     def write(self, transaction, cypher):
-        print("write")
+        return transaction.run(cypher)
 
     def read(self, transaction, cypher):
         return transaction.run(cypher)

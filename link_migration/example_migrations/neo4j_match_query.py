@@ -15,8 +15,8 @@ def up(self):
 
         MATCH (n) RETURN count(n)
     """
-    with self.connection.session() as session:
-        response_data = self.connection.read(session, "MATCH (n) RETURN count(n)")
+    with self.driver.session() as session:
+        response_data = self.driver.read(session, "MATCH (n) RETURN count(n)")
 
         # get count from neo
         for record in response_data:

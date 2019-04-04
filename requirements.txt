@@ -3,3 +3,4 @@ termcolor==1.1.0
 pytest==4.3.0
 requests==2.21.0
 neo4j-driver==1.7.2
+glom==19.2.0

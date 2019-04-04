@@ -10,7 +10,7 @@ from contextlib import redirect_stdout
 
 from argparse import ArgumentParser
 from link_migration.framework.version import VERSION
-from link_migration.framework.model import DiscovererMigration
+from link_migration.framework.model import DiscoverMigrations
 from link_migration.framework.views import TerminalMessages
 
 sys.path.insert(0, os.getcwd())
@@ -68,7 +68,7 @@ def link_migration():
     args = parser.parse_args()
     args.config = importlib.import_module(args.config)
 
-    discovered_migrations = DiscovererMigration(**vars(args))
+    discovered_migrations = DiscoverMigrations(**vars(args))
     terminal_message = TerminalMessages(discovered_migrations, **vars(args))
 
     if args.package_version:
@@ -92,7 +92,7 @@ def link_migration():
 
         if not migrations_to_execute:
             print(termcolor.colored(
-                f'No migrations need to be executed, already at the correct version: {args.config.get_current_version()}',
+                f'No migrations need to be executed, already at the correct version: {terminal_message.current_version()}',
                 "green"
             ))
 

@@ -15,7 +15,7 @@ def up(self):
 
     :param self: Contains the config object which allows conf.py access.
     """
-    print(f'Version: {self.version} --- Root Dir: {self.config.ROOT_DIR}')
+    print(f'Version: {version} --- Root Dir: {self.config.ROOT_DIR}')
 
 
 def down(self):
@@ -24,4 +24,4 @@ def down(self):
 
     :param self: Contains the config object which allows conf.py access.
     """
-    print(f'Version: {self.version} --- Root Dir: {self.config.ROOT_DIR}')
+    print(f'Version: {version} --- Root Dir: {self.config.ROOT_DIR}')

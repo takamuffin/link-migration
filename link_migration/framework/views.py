@@ -56,16 +56,16 @@ class TerminalMessages(object):
 
     def __init__(self, migrations, **kwargs):
         self.migrations = migrations
-        print("Running command: link_migration %s" % " ".join(sys.argv[1:]))
+        print("Running command: link_migration %s" % " ".join(sys.argv[1:]), flush=True)
 
     def current_version(self):
-        print(self.migrations.current_version)
+        print(self.migrations.current_version, flush=True)
 
     def make_message(self, method=None, migration=None):
-        print(FormatterMessage(migration).message(method=method))
+        print(FormatterMessage(migration).message(method=method), flush=True)
 
     def print_message(self, message=None, color=None):
-        print(FormatterMessage.print_message(body=message, color=color))
+        print(FormatterMessage.print_message(body=message, color=color), flush=True)
 
     def error_message(self, method, migration, error):
-        print(FormatterMessage(migration).message_error(method, error))
+        print(FormatterMessage(migration).message_error(method, error), flush=True)

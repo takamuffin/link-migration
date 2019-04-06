@@ -72,13 +72,13 @@ def link_migration():
     terminal_message = TerminalMessages(discovered_migrations, **vars(args))
 
     if args.package_version:
-        print(f'Package Version: {termcolor.colored(VERSION, "blue")}')
+        print(f'Package Version: {termcolor.colored(VERSION, "blue")}', flush=True)
 
     if args.version:
-        print(f'Current Migration Version: {terminal_message.current_version()}')
+        print(f'Current Migration Version: {terminal_message.current_version()}', flush=True)
 
     if (args.down and args.up) or (args.down and args.version_to) or (args.up and args.version_to):
-        print(f'Cannot run migrations. Please specify only Up, Down, or To')
+        print(f'Cannot run migrations. Please specify only Up, Down, or To', flush=True)
 
     if args.down or args.up or args.version_to:
         migrate_type = {
@@ -94,7 +94,7 @@ def link_migration():
             print(termcolor.colored(
                 f'No migrations need to be executed, already at the correct version: {terminal_message.current_version()}',
                 "green"
-            ))
+            ), flush=True)
 
         try:
             for migration in migrations_to_execute:

@@ -58,9 +58,6 @@ class TerminalMessages(object):
         self.migrations = migrations
         print("Running command: link_migration %s" % " ".join(sys.argv[1:]), flush=True)
 
-    def current_version(self):
-        print(self.migrations.current_version, flush=True)
-
     def make_message(self, method=None, migration=None):
         print(FormatterMessage(migration).message(method=method), flush=True)
 

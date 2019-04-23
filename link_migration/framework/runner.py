@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import click
 import importlib
 import sys
 import os
@@ -8,91 +9,48 @@ import traceback
 import io
 from contextlib import redirect_stdout
 
-from argparse import ArgumentParser
 from link_migration.framework.version import VERSION
 from link_migration.framework.model import DiscoverMigrations
 from link_migration.framework.views import TerminalMessages
 
 sys.path.insert(0, os.getcwd())
 
+@click.command()
+@click.option('-u/-d', '--up/--down', 'upgrade', default=None, help="Execute python methods to upgrade or downgrade the database.")
+@click.option('-t', '--to-version', help="Migrate to a specific version. The path (up/down) is automatically determined.")
+@click.option('--dry-run/--no-dry-run', default=True, is_flag=True, prompt='Dry run?', show_default=True, help="Dry run the migration to see what will be executed.")
+@click.option('-v', '--version', is_flag=True, help="Version of actual migration.")
+@click.option('--package-version', is_flag=True, help="Displays link_migration's version and exit.")
+@click.option('-c', '--config', default="link_migration.example_migrations.conf", show_default=True, help="Specify a custom configuration file.")
+@click.option('-m', '--make-migration', is_flag=True, help='Unsupported currently.')
+def link_migration(*args, **kwargs):
+    kwargs['config'] = importlib.import_module(kwargs['config'])
 
-def link_migration():
+    discovered_migrations = DiscoverMigrations(**kwargs)
+    terminal_message = TerminalMessages(discovered_migrations, **kwargs)
 
-    parser = ArgumentParser(description="Parameters to migrate.")
-    parser.add_argument(
-        "-u", "--up",
-        dest="up", default=False, action="store_true",
-        help="Execute python methods to upgrade schema of system."
-    )
-
-    parser.add_argument(
-        "-d", "--down",
-        dest="down", default=False, action="store_true",
-        help="Execute python methods to downgrade schema of system."
-    )
-
-    parser.add_argument(
-        "--no-exec", "--dry-run",
-        dest="execute", default=True, action="store_false",
-        help="Dry run the migration to see what will be executed."
-    )
-
-    parser.add_argument(
-        "-v", "--version",
-        dest="version", default=False, action="store_true",
-        help="Version of actual migration."
-    )
-
-    parser.add_argument(
-        "--package-version",
-        dest="package_version", default=False, action="store_true",
-        help="Displays link_migration's version and exit."
-    )
-
-    parser.add_argument(
-        "-t", "--to",
-        dest="version_to", default=0,
-        help="Migrate to specific version ."
-    )
-
-    parser.add_argument(
-        "-c", "--config-file",
-        dest="config", default="link_migration.example_migrations.conf",
-        help="Specify a custom configuration file."
-    )
-
-    parser.add_argument(
-        "-m", "--make-migration"
-    )
-
-    args = parser.parse_args()
-    args.config = importlib.import_module(args.config)
-
-    discovered_migrations = DiscoverMigrations(**vars(args))
-    terminal_message = TerminalMessages(discovered_migrations, **vars(args))
-
-    if args.package_version:
+    if kwargs['package_version']:
         print(f'Package Version: {termcolor.colored(VERSION, "blue")}', flush=True)
 
-    if args.version:
-        print(f'Current Migration Version: {terminal_message.current_version()}', flush=True)
+    if kwargs['version']:
+        print(f'Current Migration Version: {terminal_message.migrations.current_version}', flush=True)
 
-    if (args.down and args.up) or (args.down and args.version_to) or (args.up and args.version_to):
+    if kwargs['upgrade'] is not None and kwargs['to_version']:
         print(f'Cannot run migrations. Please specify only Up, Down, or To', flush=True)
 
-    if args.down or args.up or args.version_to:
+    if kwargs['upgrade'] is not None or kwargs['to_version']:
         migrate_type = {
-            (True, False, False): discovered_migrations.upgrade,
-            (False, True, False): discovered_migrations.downgrade,
-            (False, False, True): discovered_migrations.specified
-        }[(args.up, args.down, bool(args.version_to))]
+            (True, False): discovered_migrations.upgrade,
+            (False, False): discovered_migrations.downgrade,
+            (None, True): discovered_migrations.specified
+        }[(kwargs['upgrade'], bool(kwargs['to_version']))]
 
         migrations_to_execute = list(discovered_migrations.migrations(migrate_type))
         migrate_type = discovered_migrations.upgrade if discovered_migrations.is_up() else discovered_migrations.downgrade
 
         if not migrations_to_execute:
             print(termcolor.colored(
-                f'No migrations need to be executed, already at the correct version: {terminal_message.current_version()}',
+                f'No migrations need to be executed, already at the correct version: {terminal_message.migrations.current_version}',
                 "green"
             ), flush=True)
 
@@ -107,6 +65,8 @@ def link_migration():
             print(traceback.format_exc())
             terminal_message.error_message(migrate_type, migration, e)
             sys.exit()
+    else:
+        print('Please specify upgrade/downgrade or to-version. -h to view help.')
 
 
 if __name__ == '__main__':
